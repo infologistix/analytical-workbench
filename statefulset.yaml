@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: xfce-user-env
+  labels:
+    app.kubernetes.io/part-of: user-environments
+spec:
+  serviceName: xfce-user-env
+  replicas: 3
+  selector:
+    matchLabels:
+      app: xfce-user-env
+  template:
+    metadata:
+      labels:
+        app: xfce-user-env
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+      - name: xfce-ide
+        image: registry.example.com/xfce-ide:v1
+        ports:
+        - containerPort: 6080  # noVNC
+        - containerPort: 8080  # code-server
+        volumeMounts:
+        - name: user-code
+          mountPath: "/home/developer/code"
+        - name: user-config
+          mountPath: "/home/developer/config"
+          readOnly: true
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+  volumeClaimTemplates:
+  - metadata:
+      name: user-code
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 20Gi
+  - metadata:
+      name: user-config
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 1Gi

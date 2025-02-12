@@ -3,54 +3,40 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive \
     USERNAME=developer
 
-# Firefox ohne Snap installieren
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository -y ppa:mozillateam/ppa && \
-    echo 'Package: *' > /etc/apt/preferences.d/mozilla-firefox && \
-    echo 'Pin: release o=LP-PPA-mozillateam' >> /etc/apt/preferences.d/mozilla-firefox && \
-    echo 'Pin-Priority: 1001' >> /etc/apt/preferences.d/mozilla-firefox && \
-    apt-get update && \
-    apt-get install -y firefox && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install other packages (removed snapd)
+# Base packages
 RUN apt-get update && apt-get install -y \
+    software-properties-common \
     sudo \
     iputils-ping \
     tigervnc-standalone-server \
-    xfce4 xfce4-terminal xfce4-goodies x11vnc xvfb \
+    xfce4 xfce4-terminal xfce4-goodies \
+    x11vnc xvfb \
     curl libx11-6 libxkbfile1 libsecret-1-0 \
     dbus-x11 xterm \
     python3 python3-pip vim \
+    websockify git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Python configuration
-RUN ln -s /usr/bin/python3 /usr/bin/python
+# Firefox without Snap
+RUN add-apt-repository -y ppa:mozillateam/ppa && \
+    echo "Package: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001" > /etc/apt/preferences.d/mozilla-firefox && \
+    apt-get update && apt-get install -y firefox && apt-get clean
 
-# Install code-server
-RUN curl -fsSL https://github.com/coder/code-server/releases/download/v4.14.1/code-server-4.14.1-linux-arm64.tar.gz | tar -xz -C /usr/local \
-    && mv /usr/local/code-server-4.14.1-linux-arm64 /usr/local/code-server \
-    && ln -s /usr/local/code-server/bin/code-server /usr/bin/code-server
+# Code-server
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+
+# noVNC
+RUN git clone https://github.com/novnc/noVNC.git /opt/novnc \
+    && ln -s /opt/novnc/vnc_lite.html /opt/novnc/index.html
 
 # User setup
 RUN useradd -m -u 1000 -s /bin/bash ${USERNAME} \
-    && mkdir -p /etc/sudoers.d \
+    && echo "${USERNAME}:changeme" | chpasswd \
     && echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USERNAME} \
     && chmod 440 /etc/sudoers.d/${USERNAME}
 
-# VNC setup
-RUN mkdir -p /home/${USERNAME}/.vnc \
-    && echo "changeme" | vncpasswd -f > /home/${USERNAME}/.vnc/passwd \
-    && chmod 600 /home/${USERNAME}/.vnc/passwd
-
-VOLUME /home
-
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 8080 5900
-
-CMD ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

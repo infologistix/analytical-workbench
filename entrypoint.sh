@@ -1,34 +1,42 @@
-#!/bin/bash
+FROM ubuntu:22.04
 
-USERNAME=developer
+ENV DEBIAN_FRONTEND=noninteractive \
+    USERNAME=developer
 
-# Ensure proper permissions for home directory
-mkdir -p /home/$USERNAME
-chown -R $USERNAME:$USERNAME /home/$USERNAME
+# Base packages
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    sudo \
+    iputils-ping \
+    tigervnc-standalone-server \
+    xfce4 xfce4-terminal xfce4-goodies \
+    x11vnc xvfb \
+    curl libx11-6 libxkbfile1 libsecret-1-0 \
+    dbus-x11 xterm \
+    python3 python3-pip vim \
+    websockify git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set up VNC password
-mkdir -p /home/$USERNAME/.vnc
-if [ ! -f "/home/$USERNAME/.vnc/passwd" ]; then
-    echo "changeme" | vncpasswd -f > /home/$USERNAME/.vnc/passwd
-    chmod 600 /home/$USERNAME/.vnc/passwd
-fi
+# Firefox without Snap
+RUN add-apt-repository -y ppa:mozillateam/ppa && \
+    echo "Package: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001" > /etc/apt/preferences.d/mozilla-firefox && \
+    apt-get update && apt-get install -y firefox && apt-get clean
 
-# Install Python packages
-sudo -u $USERNAME pip3 install --user -r /home/$USERNAME/requirements.txt
+# Code-server
+RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-# Start code-server
-sudo -u $USERNAME code-server --bind-addr 0.0.0.0:8080 --auth none &
+# noVNC
+RUN git clone https://github.com/novnc/noVNC.git /opt/novnc \
+    && ln -s /opt/novnc/vnc_lite.html /opt/novnc/index.html
 
-# Start Xvfb and wait for it
-export DISPLAY=:1
-Xvfb :1 -screen 0 1280x720x16 &
-while [ ! -e /tmp/.X11-unix/X1 ]; do
-    sleep 0.5
-done
+# User setup
+RUN useradd -m -u 1000 -s /bin/bash ${USERNAME} \
+    && echo "${USERNAME}:changeme" | chpasswd \
+    && echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USERNAME} \
+    && chmod 440 /etc/sudoers.d/${USERNAME}
 
-# Start XFCE and VNC
-sudo -u $USERNAME xfce4-session &
-x11vnc -display :1 -forever -shared -rfbauth /home/${USERNAME}/.vnc/passwd &
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
-# Keep container alive
-tail -f /dev/null
+ENTRYPOINT ["/entrypoint.sh"]
