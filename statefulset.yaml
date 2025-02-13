@@ -37,6 +37,8 @@ spec:
         resources:
           limits:
             cpu: "2"
+            memory: "8Gi"
+          requests:
             memory: "4Gi"
         securityContext:
           allowPrivilegeEscalation: false

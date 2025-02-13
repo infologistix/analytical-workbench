@@ -6,8 +6,12 @@ spec:
   type: NodePort
   ports:
   - port: 6080
+    targetPort: 6080
+    nodePort: 30080
     name: novnc
   - port: 8080
+    targetPort: 8080
+    nodePort: 30007
     name: code-server
   selector:
     app: xfce-user-env
