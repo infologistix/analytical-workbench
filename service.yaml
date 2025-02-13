@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: xfce-user-env
+spec:
+  type: ClusterIP
+  ports:
+  - port: 6080
+    name: novnc
+  - port: 8080
+    name: code-server
+  selector:
+    app: xfce-user-env
