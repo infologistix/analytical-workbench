@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: xfce-user-env
 spec:
+  clusterIP: 10.102.0.36
   type: LoadBalancer  # Hier wird der Service als LoadBalancer definiert
   ports:
   - port: 6080
