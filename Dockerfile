@@ -18,10 +18,8 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Firefox without Snap
-RUN add-apt-repository -y ppa:mozillateam/ppa && \
-    echo "Package: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001" > /etc/apt/preferences.d/mozilla-firefox && \
-    apt-get update && apt-get install -y firefox && apt-get clean
+# Install Chromium browser
+RUN apt-get update && apt-get install -y chromium-browser && apt-get clean
 
 # Code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
