@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: xfce-user-env
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: 6080
     name: novnc
