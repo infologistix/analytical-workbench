@@ -33,7 +33,6 @@ spec:
           mountPath: "/home/developer/code"
         - name: user-config
           mountPath: "/home/developer/config"
-          readOnly: true
         resources:
           limits:
             cpu: "2"
@@ -41,7 +40,7 @@ spec:
           requests:
             memory: "4Gi"
         securityContext:
-          allowPrivilegeEscalation: false
+          allowPrivilegeEscalation: true
           capabilities:
             drop: ["ALL"]
   volumeClaimTemplates:
