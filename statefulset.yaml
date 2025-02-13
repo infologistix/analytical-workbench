@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/part-of: user-environments
 spec:
   serviceName: xfce-user-env
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: xfce-user-env
