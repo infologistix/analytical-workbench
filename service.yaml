@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: xfce-user-env
 spec:
-  clusterIP: None
+  type: LoadBalancer  # Hier wird der Service als LoadBalancer definiert
   ports:
   - port: 6080
     name: novnc
@@ -11,3 +11,4 @@ spec:
     name: code-server
   selector:
     app: xfce-user-env
+
