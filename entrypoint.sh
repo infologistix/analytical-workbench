@@ -27,5 +27,14 @@ sudo -u $USERNAME x11vnc -display :0 \
     -rfbauth /home/$USERNAME/.vnc/passwd \
     -rfbport 5900
 
+# Create default requirements.txt if missing
+if [ ! -f "/home/developer/config/requirements.txt" ]; then
+    touch /home/developer/config/requirements.txt
+    chown developer:developer /home/developer/config/requirements.txt
+fi
+
+# Install existing requirements
+sudo -u developer pip3 install --user -r /home/developer/config/requirements.txt
+
 # Keep container running
 tail -f /dev/null
