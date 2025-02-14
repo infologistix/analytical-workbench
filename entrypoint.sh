@@ -6,7 +6,7 @@ mkdir -p /home/$USERNAME/.vnc
 chown -R $USERNAME:$USERNAME /home/$USERNAME
 
 # Start code-server
-code-server --bind-addr 0.0.0.0:8080 --auth none /home/$USERNAME/code &
+sudo -u developer code-server --bind-addr 0.0.0.0:8080 --auth none /home/$USERNAME/code &
 
 # Start noVNC
 /opt/novnc/utils/novnc_proxy --vnc localhost:5900 --listen 6080 &
@@ -15,12 +15,12 @@ code-server --bind-addr 0.0.0.0:8080 --auth none /home/$USERNAME/code &
 export DISPLAY=:0
 
 # Start XFCE
-xfce4-session &
+sudo -u developer xfce4-session &
 
 sleep 3
 
 # Start VNC server
-x11vnc -display :0 -forever -shared -rfbauth /home/$USERNAME/.vnc/passwd -rfbport 5900
+sudo -u developer x11vnc -display :0 -forever -shared -rfbauth /home/$USERNAME/.vnc/passwd -rfbport 5900
 
 
 # Keep container running
