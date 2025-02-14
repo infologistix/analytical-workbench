@@ -35,7 +35,7 @@ RUN useradd -m -u 1000 -s /bin/bash ${USERNAME} \
     && chmod 440 /etc/sudoers.d/${USERNAME}
 
 # Set user
-USER = ${USERNAME}
+USER ${USERNAME}
 
 # Set working directory
 WORKDIR /home/${USERNAME}
