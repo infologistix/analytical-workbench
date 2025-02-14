@@ -6,10 +6,7 @@ mkdir -p /home/$USERNAME/.vnc
 chown -R $USERNAME:$USERNAME /home/$USERNAME
 
 # Start code-server
-sudo -u $USERNAME code-server \
-    --bind-addr 0.0.0.0:8080 \
-    --auth none \
-    /home/$USERNAME/code &
+code-server --bind-addr 0.0.0.0:8080 --auth none /home/$USERNAME/code &
 
 # Start noVNC
 /opt/novnc/utils/novnc_proxy --vnc localhost:5900 --listen 6080 &
@@ -18,14 +15,12 @@ sudo -u $USERNAME code-server \
 export DISPLAY=:0
 
 # Start XFCE
-sudo -u $USERNAME xfce4-session &
+xfce4-session &
+
+sleep 3
 
 # Start VNC server
-sudo -u $USERNAME x11vnc -display :0 \
-    -forever \
-    -shared \
-    -rfbauth /home/$USERNAME/.vnc/passwd \
-    -rfbport 5900
+x11vnc -display :0 -forever -shared -rfbauth /home/$USERNAME/.vnc/passwd -rfbport 5900
 
 # Create default requirements.txt if missing
 if [ ! -f "/home/developer/config/requirements.txt" ]; then
@@ -34,7 +29,7 @@ if [ ! -f "/home/developer/config/requirements.txt" ]; then
 fi
 
 # Install existing requirements
-sudo -u developer pip3 install --user -r /home/developer/config/requirements.txt
+pip3 install --user -r /home/developer/config/requirements.txt
 
 # Keep container running
 tail -f /dev/null
