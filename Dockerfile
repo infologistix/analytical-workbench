@@ -35,8 +35,13 @@ RUN useradd -m -u 1000 -s /bin/bash ${USERNAME} \
     && chmod 440 /etc/sudoers.d/${USERNAME}
 
 # Create config directory and bashrc
-RUN mkdir -p /home/developer/config && \
-    chown -R developer:developer /home/developer/config
+RUN mkdir -p /home/${USERNAME}/config && \
+    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/config
+
+# Ensure proper permissions for VNC
+RUN mkdir -p /var/log && \
+    touch /var/log/x11vnc.log && \
+    chown ${USERNAME}:${USERNAME} /var/log/x11vnc.log
 
 
 COPY entrypoint.sh /
