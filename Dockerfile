@@ -38,22 +38,6 @@ RUN useradd -m -u 1000 -s /bin/bash ${USERNAME} \
 RUN mkdir -p /home/developer/config && \
     chown -R developer:developer /home/developer/config
 
-# Add pip wrapper to .bashrc
-RUN echo $'\n\
-function pip {\n\
-  if [[ "$1" == "install" ]]; then\n\
-    args=("$@")\n\
-    packages=()\n\
-    for ((i=1; i<${#args[@]}; i++)); do\n\
-      arg=${args[$i]}\n\
-      [[ "$arg" == --* ]] && continue\n\
-      packages+=("$arg")\n\
-    done\n\
-    command pip "$@" && printf "%s\\n" "${packages[@]}" >> /home/developer/config/requirements.txt\n\
-  else\n\
-    command pip "$@"\n\
-  fi\n\
-}' >> /home/developer/.bashrc
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
