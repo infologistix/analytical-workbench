@@ -3,8 +3,7 @@
 # Set up user environment
 USERNAME=developer
 mkdir -p /home/$USERNAME/.vnc
-sudo chown -R $USERNAME:$USERNAME /home/$USERNAME
-#chmod -R 755 $USERNAME:$USERNAME /home/$USERNAME
+#chown -R $USERNAME:$USERNAME /home/$USERNAME
 
 # Start code-server
 code-server --bind-addr 0.0.0.0:8080 --auth none /home/$USERNAME/code &
