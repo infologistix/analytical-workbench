@@ -41,7 +41,7 @@ spec:
           requests:
             memory: "4Gi"
         securityContext:
-          # allowPrivilegeEscalation: true
+          allowPrivilegeEscalation: true
           capabilities:
             drop: ["ALL"]
   volumeClaimTemplates:
