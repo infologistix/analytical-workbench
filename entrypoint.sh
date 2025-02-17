@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set up user environment
-USERNAME=developer
-mkdir -p /home/$USERNAME/.vnc
+#USERNAME=developer
+#mkdir -p /home/$USERNAME/.vnc
 #chown -R $USERNAME:$USERNAME /home/$USERNAME
 
 # Start code-server
