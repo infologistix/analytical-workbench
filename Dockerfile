@@ -43,13 +43,13 @@ WORKDIR /home/${USERNAME}
 USER root
 
 # Create config directory and bashrc
-RUN mkdir -p /home/${USERNAME}/config && \
-    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/config
+#RUN mkdir -p /home/${USERNAME}/config && \
+#    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/config
 
 # Ensure proper permissions for VNC
-RUN mkdir -p /var/log && \
-    touch /var/log/x11vnc.log && \
-    chown ${USERNAME}:${USERNAME} /var/log/x11vnc.log
+#RUN mkdir -p /var/log && \
+#    touch /var/log/x11vnc.log && \
+#    chown ${USERNAME}:${USERNAME} /var/log/x11vnc.log
 
  # Set user
 USER ${USERNAME}
