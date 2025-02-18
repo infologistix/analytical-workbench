@@ -45,7 +45,7 @@ spec:
             drop: ["ALL"]
   volumeClaimTemplates:
   - metadata:
-      name: user-code
+      name: pvc-developers
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "standard"
