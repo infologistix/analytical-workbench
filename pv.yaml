@@ -10,4 +10,4 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: /home  # Gemeinsamer Pfad auf dem Host, der die Home-Verzeichnisse der Entwickler enthält.
-  storageClassName: manual
+  storageClassName: standard
