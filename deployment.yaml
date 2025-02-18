@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: xfce-user-env
   labels:
@@ -22,7 +22,6 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
-        # fsGroupChangePolicy: "OnRootMismatch"
       containers:
       - name: xfce-ide
         image: europe-west3-docker.pkg.dev/platform-app-ilx/docker-image-repository/analytical-workbench:latest
@@ -32,8 +31,8 @@ spec:
         volumeMounts:
         - name: user-code
           mountPath: "/home/developer/code"
-        - name: user-config
-          mountPath: "/home/developer/config"
+        #- name: user-config
+        #  mountPath: "/home/developer/config"
         resources:
           limits:
             cpu: "2"
