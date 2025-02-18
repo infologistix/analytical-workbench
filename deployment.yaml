@@ -31,8 +31,6 @@ spec:
         volumeMounts:
         - name: pv-developers
           mountPath: "/home/developer"
-        #- name: user-config
-        #  mountPath: "/home/developer/config"
         resources:
           limits:
             cpu: "2"
@@ -43,20 +41,7 @@ spec:
           allowPrivilegeEscalation: true
           capabilities:
             drop: ["ALL"]
-  volumeClaimTemplates:
-  - metadata:
-      name: pvc-developers
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "standard"
-      resources:
-        requests:
-          storage: 20Gi
-  #- metadata:
-  #    name: user-config
-  #  spec:
-  #    accessModes: [ "ReadWriteOnce" ]
-  #    storageClassName: "standard"
-  #    resources:
-  #      requests:
-  #        storage: 1Gi
+  volumes:
+    - name: pv-developers
+      persistentVolumeClaim:
+        claimName: pvc-developers  # Referenz auf den PVC
