@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: user-code-01
+  name: user-code
 spec:
   accessModes:
     - ReadWriteOnce
