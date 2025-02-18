@@ -29,7 +29,7 @@ spec:
         - containerPort: 6080  # noVNC
         - containerPort: 8080  # code-server
         volumeMounts:
-        - name: volumeMount-developers
+        - name: pv-developers
           mountPath: "/home"
         resources:
           limits:
