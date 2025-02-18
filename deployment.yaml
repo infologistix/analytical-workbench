@@ -29,8 +29,8 @@ spec:
         - containerPort: 6080  # noVNC
         - containerPort: 8080  # code-server
         volumeMounts:
-        - name: pvc-developers
-          mountPath: "/home/developer/code"
+        - name: pv-developers
+          mountPath: "/home/developer"
         #- name: user-config
         #  mountPath: "/home/developer/config"
         resources:
@@ -52,11 +52,11 @@ spec:
       resources:
         requests:
           storage: 20Gi
-  - metadata:
-      name: user-config
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "standard"
-      resources:
-        requests:
-          storage: 1Gi
+  #- metadata:
+  #    name: user-config
+  #  spec:
+  #    accessModes: [ "ReadWriteOnce" ]
+  #    storageClassName: "standard"
+  #    resources:
+  #      requests:
+  #        storage: 1Gi
