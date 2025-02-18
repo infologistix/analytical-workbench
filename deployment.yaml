@@ -30,7 +30,7 @@ spec:
         - containerPort: 8080  # code-server
         volumeMounts:
         - name: pv-developers
-          mountPath: "/home/developer"
+          mountPath: "/usr/src"
         resources:
           limits:
             cpu: "2"
