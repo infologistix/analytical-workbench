@@ -30,7 +30,7 @@ spec:
         - containerPort: 8080  # code-server
         volumeMounts:
         - name: developers-home
-          mountPath: "/home"
+          mountPath: "/developers"
         resources:
           limits:
             cpu: "2"
