@@ -29,7 +29,7 @@ spec:
         - containerPort: 6080  # noVNC
         - containerPort: 8080  # code-server
         volumeMounts:
-        - name: pv-developers
+        - name: developers-home
           mountPath: "/home"
         resources:
           limits:
@@ -42,6 +42,6 @@ spec:
           capabilities:
             drop: ["ALL"]
   volumes:
-    - name: pv-developers
+    - name: developers-home
       persistentVolumeClaim:
         claimName: pvc-developers  # reference to PVC
