@@ -41,7 +41,7 @@ spec:
           allowPrivilegeEscalation: true
           capabilities:
             drop: ["ALL"]
-  volumes:
-    - name: developers-home
-      persistentVolumeClaim:
-        claimName: pvc-developers  # reference to PVC
+      volumes:
+        - name: developers-home
+          persistentVolumeClaim:
+            claimName: pvc-developers  # reference to PVC
