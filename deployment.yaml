@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/part-of: user-environments
 spec:
-  serviceName: xfce-user-env
+  serviceName: xfce-user-env-service
   replicas: 1
   selector:
     matchLabels:
