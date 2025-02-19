@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xfce-user-env
-  labels:
-    app.kubernetes.io/part-of: user-environments
+  #labels:
+  #  app.kubernetes.io/part-of: user-environments
 spec:
   serviceName: xfce-user-env
   replicas: 1

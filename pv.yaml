@@ -4,7 +4,7 @@ metadata:
   name: pv-developers
 spec:
   capacity:
-    storage: 50Gi
+    storage: 20Gi
   accessModes:
     - ReadWriteMany  # Alle Container im Pod haben Lese- und Schreibzugriff auf das Volume
   persistentVolumeReclaimPolicy: Retain
