@@ -6,8 +6,8 @@ spec:
   capacity:
     storage: 20Gi
   accessModes:
-    - ReadWriteMany  # Alle Container im Pod haben Lese- und Schreibzugriff auf das Volume
-  persistentVolumeReclaimPolicy: Retain
+    - ReadWriteOnc  
+  #persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /home  # Gemeinsamer Pfad auf dem Host, der die Home-Verzeichnisse der Entwickler enthält.
-  #storageClassName: standard
+    path: /home  
+  storageClassName: standard

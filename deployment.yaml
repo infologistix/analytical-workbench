@@ -44,4 +44,4 @@ spec:
   volumes:
     - name: pv-developers
       persistentVolumeClaim:
-        claimName: pvc-developers  # Referenz auf den PVC
+        claimName: pvc-developers  # reference to PVC
