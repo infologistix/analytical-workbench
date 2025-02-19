@@ -6,7 +6,7 @@ spec:
   capacity:
     storage: 20Gi
   accessModes:
-    - ReadWriteOnc  
+    - ReadWriteOnce 
   #persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: /home  

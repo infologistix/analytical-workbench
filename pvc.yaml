@@ -4,7 +4,7 @@ metadata:
   name: pvc-developers
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: standard
   resources:
     requests:
