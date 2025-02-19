@@ -9,5 +9,5 @@ spec:
     - ReadWriteOnce 
   #persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /developrs 
+    path: /home/developrs 
   storageClassName: standard
