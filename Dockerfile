@@ -62,12 +62,12 @@ WORKDIR /home/developers/${USERNAME}
 # Admin-Benutzer als aktiven Benutzer setzen (für Dateioperationen)
 USER ${ADMIN}
 
-WORKDIR /home/${ADMIN}
+WORKDIR /home/admin
 
 #USER ${USERNAME}
 
 # Kopiere entrypoint.sh und setze die richtigen Berechtigungen
-COPY --chown=${ADMIN}:${ADMIN} entrypoint.sh /home/${ADMIN}
-RUN chmod +x /home/${ADMIN}/entrypoint.sh
+COPY --chown=admin:admin entrypoint.sh /home/admin
+RUN chmod +x /home/admin/entrypoint.sh
 
 ENTRYPOINT ["/home/admin/entrypoint.sh"]
