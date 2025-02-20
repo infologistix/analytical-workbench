@@ -52,11 +52,11 @@ USER ${USERNAME}
 WORKDIR /home/developers/${USERNAME}
 
 # Create config directory and bashrc
-#RUN mkdir -p /home/${USERNAME}/config && \
+# RUN mkdir -p /home/${USERNAME}/config && \
 #    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/config
 
 # Ensure proper permissions for VNC
-#RUN mkdir -p /var/log && \
+# RUN mkdir -p /var/log && \
 #    touch /var/log/x11vnc.log && \
 #    chown ${USERNAME}:${USERNAME} /var/log/x11vnc.log
 # Admin-Benutzer als aktiven Benutzer setzen (für Dateioperationen)
@@ -72,4 +72,8 @@ RUN chmod +x /home/${ADMIN}/entrypoint.sh
 
 ENTRYPOINT ["/home/admin/entrypoint.sh"]
 
+
 # USER ${USERNAME}
+
+
+
