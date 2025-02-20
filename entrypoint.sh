@@ -13,7 +13,7 @@ code-server --bind-addr 0.0.0.0:8080 --auth none /home/$USERNAME/code &
 
 # Set DISPLAY environment variable for XFCE
 # Wait for Xvfb
-export DISPLAY=:1
+export DISPLAY=:0
 Xvfb $DISPLAY -screen 0 1920x1080x24 &
 until xdpyinfo -display $DISPLAY >/dev/null 2>&1; do sleep 1; done
 
