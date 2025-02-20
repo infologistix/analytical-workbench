@@ -20,8 +20,9 @@ spec:
     spec:
       securityContext:
         runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+        fsGroupChangePolicy: "OnRootMismatch"
       containers:
       - name: xfce-ide
         image: europe-west3-docker.pkg.dev/platform-app-ilx/docker-image-repository/analytical-workbench:latest
@@ -31,6 +32,8 @@ spec:
         volumeMounts:
         - name: developers-home
           mountPath: "/home/developers"
+        - name: admin-home
+          mountPath: "/home/admin"
         resources:
           limits:
             cpu: "2"
@@ -38,10 +41,13 @@ spec:
           requests:
             memory: "4Gi"
         securityContext:
-          allowPrivilegeEscalation: true
+          allowPrivilegeEscalation: false
           capabilities:
             drop: ["ALL"]
       volumes:
         - name: developers-home
           persistentVolumeClaim:
             claimName: pvc-developers  # reference to PVC
+        - name: admin-home
+          persistentVolumeClaim:
+            claimName: pvc-developers 
