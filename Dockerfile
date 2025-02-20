@@ -71,9 +71,3 @@ COPY --chown=${ADMIN}:${ADMIN} entrypoint.sh /home/${ADMIN}
 RUN chmod +x /home/${ADMIN}/entrypoint.sh
 
 ENTRYPOINT ["/home/admin/entrypoint.sh"]
-
-
-# USER ${USERNAME}
-
-
-
